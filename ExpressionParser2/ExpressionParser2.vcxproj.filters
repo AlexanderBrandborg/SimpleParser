@@ -24,7 +24,10 @@
     <ClCompile Include="Parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Vistor.cpp">
+    <ClCompile Include="visitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,7 +41,10 @@
     <ClInclude Include="node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Vistor.h">
+    <ClInclude Include="Visitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="standards.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

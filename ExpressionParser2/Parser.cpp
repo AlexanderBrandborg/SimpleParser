@@ -31,48 +31,48 @@ bool Parser::expect(TokenType t)
 }
 
 
-Node Parser::expression()
+Node* Parser::expression()
 {
-	auto n = ExpressionNode();
+	auto n = new ExpressionNode();
 	if (accept(TokenType::PMOPERATOR)) {
-		n.addChild(SignNode(m_treeToken.stringValue[0]));
+		n->addChild(new SignNode(m_treeToken.stringValue[0]));
 	}
-	n.addChild(term());
+	n->addChild(term());
 	while (accept(TokenType::PMOPERATOR)) {
-		n.addChild(OperatorNode(m_treeToken.stringValue[0]));
+		n->addChild(new OperatorNode(m_treeToken.stringValue[0]));
 		std::cout << "AddSub";
-		n.addChild(term());
+		n->addChild(term());
 	}
 	return n;
 }
 
-Node Parser::term()
+Node* Parser::term()
 {
-	auto n = TermNode();
-	n.addChild(factor());
+	auto n = new TermNode();
+	n->addChild(factor());
 	while (accept(TokenType::MDOPERATOR))
 	{
-		n.addChild(OperatorNode(m_treeToken.stringValue[0]));
+		n->addChild(new OperatorNode(m_treeToken.stringValue[0]));
 		std::cout << "MultDiv ";
-		n.addChild(factor());
+		n->addChild(factor());
 	}
 	return n;
 }
 
-Node Parser::factor()
+Node* Parser::factor()
 {
-	auto n = FactorNode();
+	auto n = new FactorNode();
 	if (accept(TokenType::NUMBER)) {
-		n.addChild(NumberNode(m_treeToken.numValue));
+		n->addChild(new NumberNode(m_treeToken.numValue));
 	}
 	else
 	{
 		expect(TokenType::LPAREN);
-		n.addChild(LparenNode());
+		n->addChild(new LParenNode());
 		std::cout << "LParen ";
-		n.addChild(expression());
+		n->addChild(expression());
 		expect(TokenType::RPAREN);
-		n.addChild(RparenNode());
+		n->addChild(new RParenNode());
 		std::cout << "RParen ";
 	}
 	return n;

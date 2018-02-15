@@ -1,78 +1,85 @@
 #pragma once
-#include "Lexer.h"
 #include <vector>
+class Visitor;
+
 
 class Node
 {
 public:
-	Node() {};
-	~Node() {};
-	void addChild(Node n) {
-		m_children.push_back(n);
-	};
-	std::vector<Node> m_children = {};
-
+	Node();
+	~Node();
+	void addChild(Node* n);
+	std::vector<Node*> m_children;
+	virtual void accept(Visitor& v);
+	
 private:
 	
 };
 
 class ExpressionNode : public Node {
 public:
-	ExpressionNode() {};
-	~ExpressionNode() {};
+	ExpressionNode();
+	~ExpressionNode();
+	virtual void accept(Visitor& v) override;
+
 };
 
 class TermNode : public Node {
 public:
-	TermNode() {};
-	~TermNode() {};
+	TermNode();
+	~TermNode();
+	virtual void accept(Visitor& v) override;
 };
 
 class FactorNode : public Node {
 public:
-	FactorNode() {};
-	~FactorNode() {};
+	FactorNode();
+	~FactorNode();
+	virtual void accept(Visitor& v) override;
 };
 
 class SignNode : public Node {
 public:
-	SignNode(char sign) : m_sign{ sign } {};
-	~SignNode() {};
+	SignNode(char sign);
+	~SignNode();
+	char GetSign();
+	virtual void accept(Visitor& v) override;
 private:
 	char m_sign;
 };
 
 class OperatorNode : public Node {
 public:
-	OperatorNode(char op) : m_operator{op} {};
-	~OperatorNode() {};
+	OperatorNode(char op);
+	~OperatorNode();
+	char GetOperator();
+	virtual void accept(Visitor& v) override;
 private:
 	char m_operator;
 };
 
 class NumberNode : public Node {
 public:
-	NumberNode(int value) : m_value{ value } {};
-	~NumberNode() {};
+	NumberNode(int value);
+	~NumberNode();
+	int GetValue();
+	virtual void accept(Visitor& v) override;
 private:
 	int m_value;
 };
 
-class LparenNode : public Node {
+class LParenNode : public Node {
 public:
-	LparenNode() {};
-	~LparenNode() {};
+	LParenNode();
+	~LParenNode();
+	virtual void accept(Visitor& v) override;
 private:
 };
 
-class RparenNode : public Node {
+class RParenNode : public Node {
 public:
-	RparenNode() {};
-	~RparenNode() {};
+	RParenNode();
+	~RParenNode();
+	virtual void accept(Visitor& v) override;
 private:
 };
-
-
-
-
-
