@@ -1,6 +1,7 @@
 #include "Parser.h"
 #include <iostream>
 
+
 Parser::Parser(std::string stream): m_lexer{Lexer(stream)}
 {
 	m_lastToken = m_lexer.nextToken();
@@ -11,35 +12,39 @@ Parser::~Parser()
 {
 }
 
-bool Parser::accept(TokenType t)
+std::unique_ptr<Token> Parser::accept(TokenType t)
 {
 	if (t == m_lastToken.m_type) {
-		m_treeToken = m_lastToken;
+		auto tmp = std::make_unique<Token>(m_lastToken);
 		m_lastToken = m_lexer.nextToken();
-		return true;
+		return tmp;
 	}
-	return false;
+	return nullptr;
 }
 
-bool Parser::expect(TokenType t)
+std::unique_ptr<Token> Parser::expect(TokenType t)
 {
-	if (accept(t)) {
-		return true;
+	auto token = accept(t);
+	if (token) {
+		return token;
 	}
-	throw new std::runtime_error("Unexpected token");
-	return false;
+	else {
+		throw new std::runtime_error("Unexpected token");
+	}
 }
 
 
 Node* Parser::expression()
 {
 	auto n = new ExpressionNode();
-	if (accept(TokenType::PMOPERATOR)) {
-		n->addChild(new SignNode(m_treeToken.m_stringValue[0]));
+	std::unique_ptr<Token> token;
+	if (token = accept(TokenType::PMOPERATOR)) {
+		auto tmp = token->m_stringValue[0];
+		n->addChild(new SignNode(tmp));
 	}
 	n->addChild(term());
-	while (accept(TokenType::PMOPERATOR)) {
-		n->addChild(new OperatorNode(m_treeToken.m_stringValue[0]));
+	while (token = accept(TokenType::PMOPERATOR)) {
+		n->addChild(new OperatorNode(token->m_stringValue[0]));
 		n->addChild(term());
 	}
 	return n;
@@ -48,10 +53,12 @@ Node* Parser::expression()
 Node* Parser::term()
 {
 	auto n = new TermNode();
+	std::unique_ptr<Token> token;
+
 	n->addChild(factor());
-	while (accept(TokenType::MDOPERATOR))
+	while (token = accept(TokenType::MDOPERATOR))
 	{
-		n->addChild(new OperatorNode(m_treeToken.m_stringValue[0]));
+		n->addChild(new OperatorNode(token->m_stringValue[0]));
 		n->addChild(factor());
 	}
 	return n;
@@ -60,8 +67,9 @@ Node* Parser::term()
 Node* Parser::factor()
 {
 	auto n = new FactorNode();
-	if (accept(TokenType::NUMBER)) {
-		n->addChild(new NumberNode(m_treeToken.m_numValue));
+	std::unique_ptr<Token> token;
+	if (token = accept(TokenType::NUMBER)) {
+		n->addChild(new NumberNode(token->m_numValue));
 	}
 	else
 	{
