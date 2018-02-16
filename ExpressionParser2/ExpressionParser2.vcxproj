@@ -125,7 +125,7 @@
     <ClInclude Include="Lexer.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="Parser.h" />
-    <ClInclude Include="standards.h" />
+    <ClInclude Include="Token.h" />
     <ClInclude Include="Visitor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

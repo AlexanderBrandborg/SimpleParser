@@ -12,17 +12,18 @@ class RParenNode;
 
 class Visitor
 {
+protected:
+	Visitor() = default;
 public:
-	Visitor() {};
-	~Visitor() {};
-	virtual void visit(ExpressionNode* n) {};
-	virtual void visit(TermNode* n) {};
-	virtual void visit(FactorNode* n) {};
-	virtual void visit(SignNode* n) {};
-	virtual void visit(OperatorNode* n) {};
-	virtual void visit(NumberNode* n) {};
-	virtual void visit(LParenNode* n) {};
-	virtual void visit(RParenNode* n) {};
+	virtual ~Visitor() = default;
+	virtual void visit(ExpressionNode* n) = 0;
+	virtual void visit(TermNode* n) = 0;
+	virtual void visit(FactorNode* n) = 0;
+	virtual void visit(SignNode* n) = 0;
+	virtual void visit(OperatorNode* n) = 0;
+	virtual void visit(NumberNode* n) = 0;
+	virtual void visit(LParenNode* n) = 0;
+	virtual void visit(RParenNode* n) = 0;
 
 private:
 

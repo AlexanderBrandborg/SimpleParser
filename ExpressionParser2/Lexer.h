@@ -1,30 +1,15 @@
 #pragma once
 #include <string>
 #include <regex>
+#include "Token.h"
 
 
-enum TokenType
-{
-	PMOPERATOR,
-	MDOPERATOR,
-	NUMBER,
-	LPAREN,
-	RPAREN,
-	END
-};
-
-struct Token
-{
-	TokenType type;
-	int numValue;
-	std::string stringValue;
-};
 
 
 class Lexer
 {
 public:
-	Lexer(std::string stream);
+	Lexer(std::string& stream);
 	~Lexer();
 	Token nextToken();
 private:

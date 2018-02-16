@@ -15,9 +15,6 @@ void Node::addChild(Node* n)
 	m_children.push_back(n);
 }
 
-void Node::accept(Visitor & v)
-{
-}
 
 
 

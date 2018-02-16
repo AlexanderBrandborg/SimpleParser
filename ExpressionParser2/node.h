@@ -5,12 +5,15 @@ class Visitor;
 
 class Node
 {
-public:
+protected:
 	Node();
-	~Node();
-	void addChild(Node* n);
+
+public:
+	
+	virtual ~Node();
 	std::vector<Node*> m_children;
-	virtual void accept(Visitor& v);
+	void addChild(Node* n);
+	virtual void accept(Visitor& v)=0;
 	
 private:
 	

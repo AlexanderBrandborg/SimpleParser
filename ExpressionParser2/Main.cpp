@@ -1,4 +1,5 @@
-#include"standards.h"
+#include "Parser.h"
+#include "Visitor.h"
 
 int main(){
 
@@ -6,9 +7,14 @@ int main(){
 	auto pv = PrintVisitor();
 	root.m_root->accept(pv);
 	
-	//root = Parser("+2 + 2");
-	//Parser("2 + 2");
-	//Parser("+2 - ((2 + 2) / 4)");
+	root = Parser("+2 + 2");
+	root.m_root->accept(pv);
+
+	root = Parser("2 + 2");
+	root.m_root->accept(pv);
+
+	root = Parser("+2 - ((2 + 2) / 4)");
+	root.m_root->accept(pv);
 
 	return 0;
 }

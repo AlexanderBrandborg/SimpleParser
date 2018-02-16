@@ -1,6 +1,7 @@
 #include "Lexer.h"
 
-Lexer::Lexer(std::string stream) : m_stream{stream}
+
+Lexer::Lexer(std::string& stream) : m_stream{stream}
 {
 }
 
@@ -10,17 +11,18 @@ Lexer::~Lexer()
 
 Token Lexer::nextToken()
 {
-	Token tok = {};
+	auto tok = Token{};
 	char lastChar;
+	
 	// Ignore whitespace
 	do
 	{
 		lastChar = getStreamChar();
 	} while (isspace(lastChar));
 
-	// Terminator. Parser should not get here, I think.
+	// Terminator, must be here as \0 also figures in strchr in later matches
 	if (lastChar == '\0') {
-		tok.type = TokenType::END;
+		tok.m_type = TokenType::END;
 	}
 
 	// Numbers
@@ -29,45 +31,44 @@ Token Lexer::nextToken()
 		std::string numStr = "";
 		numStr += lastChar;
 
-		while (m_Position < m_stream.length() && isdigit(m_stream[m_Position])) // Hack???
+		// Looks ahead to see if the next char is also a number
+		while (m_Position < m_stream.length() && isdigit(m_stream[m_Position]))
 		{
 			lastChar = getStreamChar();
 			numStr += lastChar;
 		}
 
-		tok.type = TokenType::NUMBER;
-		tok.numValue = std::stoi(numStr);
+		tok.m_type = TokenType::NUMBER;
+		tok.m_numValue = std::stoi(numStr);
 	}
 
 	// Operators
 	else if (strchr("+-", lastChar)) {
-		tok.type = TokenType::PMOPERATOR;
-		tok.stringValue = lastChar;
+		tok.m_type = TokenType::PMOPERATOR;
+		tok.m_stringValue = lastChar;
 	}
 
 	else if (strchr("*/", lastChar)) {
-		tok.type = TokenType::MDOPERATOR;
-		tok.stringValue = lastChar;
+		tok.m_type = TokenType::MDOPERATOR;
+		tok.m_stringValue = lastChar;
 	}
 
-	// Left paran
+	// Left paranthesis
 	else if (lastChar == '(') {
-		tok.type = TokenType::LPAREN;
-		tok.stringValue = lastChar;
+		tok.m_type = TokenType::LPAREN;
+		tok.m_stringValue = lastChar;
 	}
 
-	// Right paran
+	// Right paranthesis
 	else if (lastChar == ')') {
-		tok.type = TokenType::RPAREN;
-		tok.stringValue = lastChar;
+		tok.m_type = TokenType::RPAREN;
+		tok.m_stringValue = lastChar;
 	}
-
-	
 
 	// Token not recognized
 	else
 	{
-		throw std::runtime_error("Unrecognized token");
+		throw new std::runtime_error("Unrecognized token");
 	}
 
 	return tok;
