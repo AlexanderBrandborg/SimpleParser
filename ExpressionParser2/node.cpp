@@ -8,6 +8,7 @@ Node::Node()
 
 Node::~Node()
 {
+	m_children.clear();
 }
 
 void Node::addChild(Node* n)

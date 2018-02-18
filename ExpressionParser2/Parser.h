@@ -11,7 +11,6 @@ public:
 	Node* m_root;
 private:
 	Token m_lastToken;
-	Token m_treeToken;
 	Lexer m_lexer;
 	
 

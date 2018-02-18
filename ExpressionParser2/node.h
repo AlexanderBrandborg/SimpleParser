@@ -11,11 +11,11 @@ protected:
 public:
 	
 	virtual ~Node();
-	std::vector<Node*> m_children;
 	void addChild(Node* n);
 	virtual void accept(Visitor& v)=0;
-	
+	const std::vector<Node*>& getChildren() { return m_children; }
 private:
+	std::vector<Node*> m_children;
 	
 };
 

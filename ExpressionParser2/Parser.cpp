@@ -10,7 +10,9 @@ Parser::Parser(std::string stream): m_lexer{Lexer(stream)}
 
 Parser::~Parser()
 {
+	delete this->m_root;
 }
+
 
 std::unique_ptr<Token> Parser::accept(TokenType t)
 {

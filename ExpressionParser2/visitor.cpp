@@ -11,23 +11,24 @@ PrintVisitor::~PrintVisitor()
 
 void PrintVisitor::visit(ExpressionNode* n)
 {
-	for (int i = 0; i < n->m_children.size(); ++i) {
-	  n->m_children[i]->accept(*this);
+
+	for (int i = 0; i < n->getChildren().size(); ++i) {
+		n->getChildren()[i]->accept(*this);
 	}
 	
 }
 
 void PrintVisitor::visit(TermNode* n)
 {
-	for (int i = 0; i < n->m_children.size(); ++i) {
-		n->m_children[i]->accept(*this);
+	for (int i = 0; i < n->getChildren().size(); ++i) {
+		n->getChildren()[i]->accept(*this);
 	}
 }
 
 void PrintVisitor::visit(FactorNode* n)
 {
-	for (int i = 0; i < n->m_children.size(); ++i) {
-		n->m_children[i]->accept(*this);
+	for (int i = 0; i < n->getChildren().size(); ++i) {
+		n->getChildren()[i]->accept(*this);
 	}
 }
 
