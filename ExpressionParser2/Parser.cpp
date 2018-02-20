@@ -13,6 +13,12 @@ Parser::~Parser()
 	delete this->m_root;
 }
 
+Parser & Parser::operator=(const Parser & other)
+{
+	this->m_root = new ExpressionNode(*static_cast<ExpressionNode*>(other.m_root));
+	return *this;
+}
+
 
 std::unique_ptr<Token> Parser::accept(TokenType t)
 {

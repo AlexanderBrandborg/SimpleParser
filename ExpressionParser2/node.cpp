@@ -11,6 +11,11 @@ Node::~Node()
 	m_children.clear();
 }
 
+Node::Node(const Node & other)
+{
+	m_children = other.m_children;
+}
+
 void Node::addChild(Node* n)
 {
 	m_children.push_back(n);
@@ -21,6 +26,10 @@ void Node::addChild(Node* n)
 
 // Expression
 ExpressionNode::ExpressionNode()
+{
+}
+
+ExpressionNode::ExpressionNode(const ExpressionNode & other) : Node(other)
 {
 }
 
@@ -39,6 +48,10 @@ TermNode::TermNode()
 {
 }
 
+TermNode::TermNode(const TermNode & other) : Node(other)
+{
+}
+
 TermNode::~TermNode()
 {
 }
@@ -51,6 +64,10 @@ void TermNode::accept(Visitor& v)
 
 // Factor
 FactorNode::FactorNode()
+{
+}
+
+FactorNode::FactorNode(const FactorNode & other) : Node(other)
 {
 }
 
@@ -69,11 +86,15 @@ SignNode::SignNode(char sign) : m_sign{ sign }
 {
 }
 
+SignNode::SignNode(const SignNode & other) : Node(other), m_sign(other.GetSign()) 
+{
+}
+
 SignNode::~SignNode()
 {
 }
 
-char SignNode::GetSign()
+const char SignNode::GetSign() const
 {
 	return m_sign;
 }
@@ -88,11 +109,15 @@ OperatorNode::OperatorNode(char op) : m_operator{ op }
 {
 }
 
+OperatorNode::OperatorNode(const OperatorNode & other) : Node(other), m_operator(GetOperator())
+{
+}
+
 OperatorNode::~OperatorNode()
 {
 }
 
-char OperatorNode::GetOperator()
+const char OperatorNode::GetOperator() const
 {
 	return m_operator;
 }
@@ -102,8 +127,12 @@ void OperatorNode::accept(Visitor& v)
 	v.visit(this);
 }
 
-
 // Number
+NumberNode::NumberNode(const NumberNode & other) : Node(other), m_value(other.GetValue())
+{
+}
+
+
 NumberNode::NumberNode(int value) : m_value{ value }
 {
 }
@@ -112,7 +141,7 @@ NumberNode::~NumberNode()
 {
 }
 
-int NumberNode::GetValue()
+const int NumberNode::GetValue() const
 {
 	return m_value;
 }
@@ -127,6 +156,10 @@ LParenNode::LParenNode()
 {
 }
 
+LParenNode::LParenNode(const LParenNode & other) : Node(other)
+{
+}
+
 LParenNode::~LParenNode()
 {
 }
@@ -138,6 +171,10 @@ void LParenNode::accept(Visitor& v)
 
 // Right parenthesis
 RParenNode::RParenNode()
+{
+}
+
+RParenNode::RParenNode(const RParenNode & other) : Node(other)
 {
 }
 

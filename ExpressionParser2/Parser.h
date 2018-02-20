@@ -8,6 +8,9 @@ class Parser
 public:
 	Parser(std::string stream);
 	~Parser();
+	//Parser(const Parser&);
+	Parser& operator =(const Parser& other);
+
 	Node* m_root;
 private:
 	Token m_lastToken;

@@ -11,6 +11,7 @@ protected:
 public:
 	
 	virtual ~Node();
+	Node(const Node& other);
 	void addChild(Node* n);
 	virtual void accept(Visitor& v)=0;
 	const std::vector<Node*>& getChildren() { return m_children; }
@@ -22,6 +23,7 @@ private:
 class ExpressionNode : public Node {
 public:
 	ExpressionNode();
+	ExpressionNode(const ExpressionNode& other);
 	~ExpressionNode();
 	virtual void accept(Visitor& v) override;
 
@@ -30,6 +32,7 @@ public:
 class TermNode : public Node {
 public:
 	TermNode();
+	TermNode(const TermNode& other);
 	~TermNode();
 	virtual void accept(Visitor& v) override;
 };
@@ -37,6 +40,7 @@ public:
 class FactorNode : public Node {
 public:
 	FactorNode();
+	FactorNode(const FactorNode& other);
 	~FactorNode();
 	virtual void accept(Visitor& v) override;
 };
@@ -44,8 +48,9 @@ public:
 class SignNode : public Node {
 public:
 	SignNode(char sign);
+	SignNode(const SignNode& other);
 	~SignNode();
-	char GetSign();
+	const char GetSign() const;
 	virtual void accept(Visitor& v) override;
 private:
 	char m_sign;
@@ -54,8 +59,9 @@ private:
 class OperatorNode : public Node {
 public:
 	OperatorNode(char op);
+	OperatorNode(const OperatorNode& other);
 	~OperatorNode();
-	char GetOperator();
+	const char GetOperator() const;
 	virtual void accept(Visitor& v) override;
 private:
 	char m_operator;
@@ -63,9 +69,10 @@ private:
 
 class NumberNode : public Node {
 public:
+	NumberNode(const NumberNode& other);
 	NumberNode(int value);
 	~NumberNode();
-	int GetValue();
+	const int GetValue() const;
 	virtual void accept(Visitor& v) override;
 private:
 	int m_value;
@@ -74,6 +81,7 @@ private:
 class LParenNode : public Node {
 public:
 	LParenNode();
+	LParenNode(const LParenNode& other);
 	~LParenNode();
 	virtual void accept(Visitor& v) override;
 private:
@@ -82,6 +90,7 @@ private:
 class RParenNode : public Node {
 public:
 	RParenNode();
+	RParenNode(const RParenNode& other);
 	~RParenNode();
 	virtual void accept(Visitor& v) override;
 private:
