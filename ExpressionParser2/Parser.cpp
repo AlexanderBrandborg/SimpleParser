@@ -41,7 +41,6 @@ std::unique_ptr<Token> Parser::expect(TokenType t)
 	}
 }
 
-
 Node* Parser::expression()
 {
 	auto n = new ExpressionNode();

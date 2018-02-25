@@ -30,6 +30,7 @@ private:
 };
 
 
+// Prints out AST, showing original output without whitespace characters.
 class PrintVisitor : public Visitor
 {
 public:
