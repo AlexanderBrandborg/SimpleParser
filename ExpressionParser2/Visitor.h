@@ -24,9 +24,6 @@ public:
 	virtual void visit(NumberNode* n) = 0;
 	virtual void visit(LParenNode* n) = 0;
 	virtual void visit(RParenNode* n) = 0;
-
-private:
-
 };
 
 
@@ -44,7 +41,4 @@ public:
 	virtual void visit(NumberNode* n) override;
 	virtual void visit(LParenNode* n) override;
 	virtual void visit(RParenNode* n) override;
-
-private:
-
 };

@@ -9,6 +9,7 @@ enum TokenType
 	END
 };
 
+//TODO: Make a toke hierachy, where each class contains token type and additional data.
 struct Token
 {
 	TokenType m_type;

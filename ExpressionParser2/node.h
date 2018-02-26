@@ -9,14 +9,14 @@ protected:
 	Node();
 
 public:
-	
 	virtual ~Node();
 	Node(const Node& other);
+	//TODO: Implement to follow rule of three
+	//Node& operator =(const Node& other);
 	void addChild(Node* n);
 	virtual void accept(Visitor& v)=0;
 	virtual Node* clone() const = 0;
-
-	const std::vector<Node*>& getChildren() { return m_children; }
+	const std::vector<Node*>& getChildren();
 private:
 	std::vector<Node*> m_children;
 	
@@ -29,7 +29,6 @@ public:
 	virtual ~ExpressionNode();
 	virtual void accept(Visitor& v) override;
 	virtual ExpressionNode* clone() const;
-
 };
 
 class TermNode : public Node {

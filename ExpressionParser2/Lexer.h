@@ -1,10 +1,6 @@
 #pragma once
 #include <string>
-#include <regex>
 #include "Token.h"
-
-
-
 
 class Lexer
 {
@@ -13,7 +9,7 @@ public:
 	~Lexer();
 	Token nextToken();
 private:
-	int m_Position = 0;
+	int m_StreamIndex = 0;
 	std::string m_stream;
-	char getStreamChar();
+	char popCharFromStream();
 };

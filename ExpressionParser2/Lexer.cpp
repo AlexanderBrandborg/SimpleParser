@@ -1,6 +1,5 @@
 #include "Lexer.h"
 
-
 Lexer::Lexer(std::string& stream) : m_stream{stream}
 {
 }
@@ -17,10 +16,10 @@ Token Lexer::nextToken()
 	// Ignore whitespace
 	do
 	{
-		lastChar = getStreamChar();
+		lastChar = popCharFromStream();
 	} while (isspace(lastChar));
 
-	// Terminator, must be here as \0 also figures in strchr in later matches
+	// Terminator, must be here as \0 also figures in strchr during later matches
 	if (lastChar == '\0') {
 		tok.m_type = TokenType::END;
 	}
@@ -32,12 +31,11 @@ Token Lexer::nextToken()
 		numStr += lastChar;
 
 		// Looks ahead to see if the next char is also a number
-		while (m_Position < m_stream.length() && isdigit(m_stream[m_Position]))
+		while (m_StreamIndex < m_stream.length() && isdigit(m_stream[m_StreamIndex]))
 		{
-			lastChar = getStreamChar();
+			lastChar = popCharFromStream();
 			numStr += lastChar;
 		}
-
 		tok.m_type = TokenType::NUMBER;
 		tok.m_numValue = std::stoi(numStr);
 	}
@@ -74,9 +72,9 @@ Token Lexer::nextToken()
 	return tok;
 }
 
-char Lexer::getStreamChar()
+char Lexer::popCharFromStream()
 {
-	auto str = m_stream[m_Position];
-	++m_Position;
+	auto str = m_stream[m_StreamIndex];
+	++m_StreamIndex;
 	return str;
 }

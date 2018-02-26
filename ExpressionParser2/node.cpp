@@ -28,6 +28,11 @@ void Node::addChild(Node* n)
 	m_children.push_back(n);
 }
 
+const std::vector<Node*>& Node::getChildren()
+{
+	return m_children; 
+}
+
 
 // Expression
 ExpressionNode::ExpressionNode()
